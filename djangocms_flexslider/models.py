@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from djangocms_text_ckeditor.fields import HTMLField
@@ -11,7 +10,6 @@ from cms.models import CMSPlugin, Page
 from filer.fields.image import FilerImageField
 
 
-@python_2_unicode_compatible
 class Slider(CMSPlugin):
     """
     Used to model the image slider.
@@ -36,12 +34,11 @@ class Slider(CMSPlugin):
         verbose_name_plural = _('Sliders')
 
 
-@python_2_unicode_compatible
 class Slide(CMSPlugin):
     """
     Used to model the slides in a slider.
     """
-    image = FilerImageField()
+    image = FilerImageField(on_delete=models.CASCADE)
     width = models.IntegerField(_('width'), blank=True, null=True, help_text=_('in pixels'))
     height = models.IntegerField(_('height'), blank=True, null=True, help_text=_('in pixels'))
     caption = HTMLField(_('caption'), blank=True, null=True,
